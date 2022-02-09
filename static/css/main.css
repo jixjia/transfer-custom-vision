@@ -81,6 +81,12 @@ body {
   align-items: center;
 }
 
+/* Custom placeholder color/opacity */
+::placeholder {
+  font-size: 0.9em;
+  color: #aaa !important;
+}
+
 /* Custom Modal Size */
 .modal-large-fluid {
   max-width: inherit;
