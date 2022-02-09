@@ -38,7 +38,7 @@
         <input type="password" class="form-control" id="source_training_key" name="source_training_key" placeholder="e.g. ca253164ff7f4dcab43f550e4d79821d">
       </div>
       <div class="h-right mt-3">
-        <button class="btn btn-block btn-outline-secondary pointer-disabled" id="btn_get_projects" disabled><i class="fa fa-eye px-2" aria-hidden="true"></i> Get Projects</button>
+        <button class="btn btn-block btn-secondary pointer-disabled" id="btn_get_projects" disabled><i class="fa fa-eye px-2" aria-hidden="true"></i> Get Projects</button>
       </div>
     </div>
 
@@ -67,7 +67,7 @@
         <input type="password" class="form-control toggle_item text-lightgray" id="destination_training_key" name="destination_training_key" placeholder="e.g. 4a1237c219cf44879b7b1e6et1567423" disabled>
       </div>
       <div class="h-right mt-3">
-        <button class="btn btn-block btn-outline-secondary pointer-disabled" id="btn_import_projects" disabled><i class="fa fa-magic px-2" aria-hidden="true"></i> Transfer Projects</button>
+        <button class="btn btn-block btn-secondary pointer-disabled toggle_item" id="btn_import_projects" disabled><i class="fa fa-magic px-2" aria-hidden="true"></i> Transfer Projects</button>
       </div>
     </div>
 
@@ -110,6 +110,11 @@
       <div class="hide" id="btn_modal_close">
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onClick="window.location.reload();">Close</button>
+        </div>
+      </div>
+      <div class="hide" id="btn_modal_tryagain">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa fa-undo pe-2" aria-hidden="true"></i> Try Again</button>
         </div>
       </div>
       <!-- Footer End -->

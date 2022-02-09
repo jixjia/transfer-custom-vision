@@ -12,52 +12,37 @@ var loading_icon_page =
 const source_inputs = $('#source_training_key, #source_resource_name');
 const destination_inputs = $('#destination_training_key, #destination_resource_name');
 
-source_inputs.on("change", function(){
-  if($(this).val().length > 0) {
+source_inputs.on("keyup", function(){
+  let valid = true;
+  source_inputs.each(function() {
+    if (!$(this).val()) valid = false;
+  })
+  if(valid) {
     // enable button
     $("#btn_get_projects").prop('disabled', false);
-    $("#btn_get_projects").removeClass("btn-outline-secondary pointer-disabled").addClass("btn-outline-primary");
+    $("#btn_get_projects").removeClass("btn-secondary pointer-disabled").addClass("btn-primary");
   } else {
     // disable button
     $("#btn_get_projects").prop('disabled', true);
-    $("#btn_get_projects").removeClass("btn-outline-primary").addClass("btn-outline-secondary pointer-disabled");
+    $("#btn_get_projects").removeClass("btn-primary").addClass("btn-secondary pointer-disabled");
   }
 });
 
-destination_inputs.on("change", function(){
-  if($(this).val().length > 0) {
+destination_inputs.on("keyup", function(){
+  let valid = true;
+  destination_inputs.each(function() {
+    if (!$(this).val()) valid = false;
+  })
+  if(valid) {
     // enable button
     $("#btn_import_projects").prop('disabled', false);
-    $("#btn_import_projects").removeClass("btn-outline-secondary pointer-disabled").addClass("btn-outline-success");
+    $("#btn_import_projects").removeClass("btn-secondary pointer-disabled").addClass("btn-success");
   } else {
     // disable button
     $("#btn_import_projects").prop('disabled', true);
-    $("#btn_import_projects").removeClass("btn-outline-success").addClass("btn-outline-secondary pointer-disabled");
+    $("#btn_import_projects").removeClass("btn-success").addClass("btn-secondary pointer-disabled");
   }
 });
-
-
-// var toValidate = $('#source_training_key, #source_resource_name'), valid = false;
-// toValidate.keyup(function () {
-//   if ($(this).val().length > 0) {
-//       $(this).data('valid', true);
-//   } else {
-//       $(this).data('valid', false);
-//   }
-//   toValidate.each(function () {
-//       if ($(this).data('valid') == true) {valid = true;} 
-//       else {valid = false;}
-//   });
-//   if (valid === true) {
-//     // enable button
-//     $("#btn_get_projects").prop('disabled', false);
-//     $("#btn_get_projects").removeClass("btn-outline-secondary pointer-disabled").addClass("btn-outline-primary");
-//   } else {
-//     // disable button
-//     $("#btn_get_projects").prop('disabled', true);
-//     $("#btn_get_projects").removeClass("btn-outline-primary").addClass("btn-outline-secondary pointer-disabled");
-//   }
-// });
 
 
 // Get Projects
@@ -116,10 +101,14 @@ $(function () {
       beforeSend: function () {
         // disable submit button
         document.getElementById('btn_import_projects').disabled = true;
-        // set to spinner loader
+        // reset to spinner loader
         $("#modal_icon").html(loading_icon);
-        // set message
+        // reset message
         $('#modal_message').html('Preparing for transfer...<br /><code>Do NOT refresh or close this page</code>');
+        // reset try again button
+        $('#btn_modal_tryagain').hide();
+        // reset message style
+        $('#modal_message').css('color','black');
         // show modal
         $('#modal').modal('show');
       }
@@ -128,15 +117,17 @@ $(function () {
         // success
         $('#modal_icon').html(done_icon);
         $('#modal_message').html('<span style="color: green;">Transfer Successful</span><p>See your transferred projects in Custom Vision site</p>');
+        // enable close button
+        $('#btn_modal_close').show();
       }
       else {
         // fail
         $('#modal_icon').html(error_icon);
-        document.getElementById('modal_message').style.color = 'red';
+        $('#modal_message').css('color','red');
         $('#modal_message').text(response.msg);
+        // enable try again button
+        $('#btn_modal_tryagain').show();
       }
-      // enable close button
-      $('#btn_modal_close').show();
       // re-enable submit button 
       document.getElementById('btn_import_projects').disabled = false;
     });
