@@ -2,7 +2,6 @@
 A simple UI app for facilitate copying Custom Vision projects (including the trained models, training images and project settings) across to another Azure subscription, location and/or resource group.
 
 <hr>
-<br>
 
 ## Setup
 #### Running on local
