@@ -1,0 +1,175 @@
+{% extends "template.html" %} {% block main %}
+
+<!-- Pre-load -->
+<i class="fa fa-spinner fa-pulse fa-1x fa-fw invisible"></i>
+
+<!-- Top Placeholder -->
+<div class="container-fluid">
+  <div class="row mt-3">
+    <div class="col">
+      &nbsp;
+    </div>
+  </div>
+</div>
+
+<!-- Main Start -->
+<div class="container px-5">
+
+  <!-- Input Group  -->
+  <div class="row mb-2">
+    <!-- SOURCE -->
+    <div class="col-md-5 mt-2">
+      <h3>ORIGIN</h3>
+      <div class="py-2">
+        Resource Name 
+        <a tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="The Custom Vision resource name that you wish to copy projects from">
+          <i class="fa fa-info-circle pointer ps-2" aria-hidden="true"></i>
+        </a>
+      </div>
+      <div class="input-group">
+        <input type="text" class="form-control" id="source_resource_name" name="source_resource_name">
+      </div>
+      <div class="py-2">Training Key 
+        <a tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="The training key of the origin Custom Vision project. Find it in your Custom Vision project settings page.">
+          <i class="fa fa-info-circle pointer ps-2" aria-hidden="true"></i>
+        </a>
+      </div>
+      <div class="input-group">
+        <input type="password" class="form-control" id="source_training_key" name="source_training_key">
+      </div>
+      <div class="h-right mt-3">
+        <button class="btn btn-block btn-outline-secondary pointer-disabled" id="btn_get_projects" disabled><i class="fa fa-eye px-2" aria-hidden="true"></i> Get Projects</button>
+      </div>
+    </div>
+
+    <!-- ICON -->
+    <div class="col-md-2 mt-2 h-center v-center">
+      <i id="icon-arrow" class="fa fa-arrow-circle-right fa-5x fa-fw toggle_item text-lightgray" aria-hidden="true"></i>
+    </div>
+
+    <!-- DESTINATION -->
+    <div class="col-md-5 mt-2">
+      <h3 class="text-lightgray toggle_item">TARGET</h3>
+      <div class="py-2 text-lightgray toggle_item">Resource Name 
+        <a tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="The Custom Vision resource name you wish to copy the projects to">
+          <i class="fa fa-info-circle pointer ps-2" aria-hidden="true"></i>
+        </a>
+      </div>
+      <div class="input-group">
+        <input type="text" class="form-control toggle_item text-lightgray" id="destination_resource_name" name="destination_resource_name" disabled>
+      </div>
+      <div class="py-2 text-lightgray toggle_item">Training Key 
+        <a tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="The training key of the destination Custom Vision project. Find it in your Custom Vision project settings page.">
+          <i class="fa fa-info-circle pointer ps-2" aria-hidden="true"></i>
+        </a>
+      </div>
+      <div class="input-group">
+        <input type="password" class="form-control toggle_item text-lightgray" id="destination_training_key" name="destination_training_key" disabled>
+      </div>
+      <div class="h-right mt-3">
+        <button class="btn btn-block btn-outline-secondary pointer-disabled" id="btn_import_projects" disabled><i class="fa fa-magic px-2" aria-hidden="true"></i> Transfer Projects</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Note -->
+  <div>
+    <h4>Note</h4>
+    <ul>
+      <li>If the selected project already exists in the target, a new project name with numbered suffix will be created</li>
+    </ul>
+  </div>
+
+  <!-- Project List -->
+  <div id="project_list" class="row mt-4 mb-2"></div>
+
+
+</div>
+<!-- Main End -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Transfering</h5>
+      </div>
+      <div class="modal-body">
+        <!-- AJAX Start -->
+        <div class="mt-5">
+          <div class="text-center">
+            <div id="modal_icon" class="col center_flex my-5"></div>
+            <p id="modal_message" class="mt-2 mb-5"></p>
+          </div>
+        </div>
+        <!-- AJAX End -->
+      </div>
+      <!-- Footer Start -->
+      <div class="hide" id="btn_modal_close">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onClick="window.location.reload();">Close</button>
+        </div>
+      </div>
+      <!-- Footer End -->
+    </div>
+  </div>
+</div>
+
+
+<!-- How-To Modal -->
+<div class="modal fade" id="how-to-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">How To</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>3 steps to copy your Custom Vision projects between Azure subscriptions</p>
+        
+        <h4 class="mt-4">Step 1 - Origin details</h4>
+        <p>Enter the source Custom Vision <code>resource name</code> and <code>training key</code></p>
+        <img src="../static/images/step1.png" class="img-fluid" alt="Enter origin resource detail">
+
+        <h4 class="mt-5">Step 2 - Select projects</h4>
+        <p>Pikc the desired projects to copy across</p>
+        <img src="../static/images/step2.png" class="img-fluid" alt="Pick desired projects to copy">
+
+        <h4 class="mt-5">Step 3 - Target details</h4>
+        <p>Enter the destination Custom Vision <code>resource name</code> and <code>training key</code></p>
+        <img src="../static/images/step3.png" class="img-fluid" alt="Enter destination resource detail">
+
+        <h4 class="mt-5">That's it !</h4>
+        <p>If everything entered correctly you should see transfer completes after a few while</p>
+        <img src="../static/images/step4.png" class="img-fluid" alt="Confirm transfer succeeded">
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Privacy Modal -->
+<div class="modal fade" id="privacy-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Privacy Statement</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          This application is designed to help simplify moving Custom Vision projects between Azure subscriptions. 
+          It uses Microsoft's <code>Custom Vision REST API v3.3</code> at the back to accomplish the task.<br>
+          Please refer to Microsoft's API <a href="https://docs.microsoft.com/en-us/legal/microsoft-apis/terms-of-use#1--defined-terms" target="_blank">Term of Use</a> for more details on privacy policy.
+        </p>
+        <p>
+          This site do NOT store Your information entered and we also recommend you to turn off Browser's <strong>Remember Password</strong> feature for this site to protect your sensitive information.<br>
+        </p>
+        
+    </div>
+  </div>
+</div>
+
+{% endblock %}

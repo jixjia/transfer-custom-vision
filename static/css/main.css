@@ -1,0 +1,180 @@
+:root {
+  --theme-black: #111;
+  --theme-background: #e9ecf0;
+  --sidebar-width: 300px;
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background-color: var(--theme-background);
+  font-family: 'Roboto Condensed', sans-serif;
+}
+/* footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+} */
+.btn-light {
+  background-color: #fff !important;
+  border-color: #ccc !important;
+}
+.invisible {
+  visibility: hidden;
+}
+.hide {
+  display: none;
+}
+.blue {
+  background-color:  blue;
+}
+.red {
+  background-color:  red;
+}
+.yellow {
+  background-color:  yellow;
+}
+.pointer {
+  cursor: pointer;
+}
+.pointer-disabled {
+  cursor: not-allowed !important;
+  pointer-events: all !important;
+}
+.text-xs {
+  font-size: 0.9rem;
+}
+.text-xxs {
+  font-size: 0.7rem;
+}
+.text-s {
+  font-size: 1rem;
+}
+.text-m {
+  font-size: 1.2rem;
+}
+.text-l {
+  font-size: 1.4rem;
+}
+.text-lightgray {
+  color: #aaa;
+}
+.h-right {
+  align-items: flex-end;
+  text-align: right;
+}
+.h-center {
+  margin: 0 auto;
+  text-align: center;
+  justify-content: center;
+  display: block;
+}
+.v-center {
+  display: flex;
+  align-items: center;
+}
+
+/* Custom Modal Size */
+.modal-large-fluid {
+  max-width: inherit;
+  width: 70%;
+}
+
+/* Side Nav Bar */
+.sidebar {
+  width: var(--sidebar-width);
+  height: 100%;
+  background-color: var(--theme-black);
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  padding: 0 10px 0;
+}
+.main-dish {
+  margin-left: var(--sidebar-width);
+  padding: 20px 40px 0;
+  height: 100%;
+}
+
+
+/* Top menu bar */
+.nav-menu-itme li {
+  padding: 0 1rem;
+}
+.globe-icon {
+  font-size: 1.5rem;
+}
+.logo {
+  margin: 0 1em 0 0;
+}
+.logo img {
+  width: 30px;
+}
+.nav-button {
+  padding: 5px 0;
+}
+
+/* Filter selector */
+.filters {
+  padding: 0.2rem 1rem;
+}
+.search-btn {
+  padding: 0.5rem 3rem;
+}
+
+/* Card Result */
+.card-videobox {
+  position: relative;
+  min-height: 150px;
+  height: 150px;
+}
+.card-play-button {
+  display: block;
+  position: absolute;
+  top: 2.7rem;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  color: rgba(2550,255,255,0.7);
+}
+.card-description {
+  line-height: 1rem;
+}
+.card-img-top {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+.project-checkbox {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.overlay {
+  z-index: 999;
+}
+input[type="checkbox"]{
+  transform: scale(1.5);
+}
+
+
+/* On small screens, set height to 'auto' for the grid */
+@media screen and (max-width: 768px) {
+  .main-dish {
+    margin-left: 0;
+  }
+  #icon-arrow {
+    transform: rotate(90deg);
+  }
+}

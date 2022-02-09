@@ -1,0 +1,142 @@
+<!-- Templates -->
+
+{% if results|length == 0 %}
+<div class="container-fluid mt-3">
+  <div class="row h-center">
+    <div class="col">
+      <img src="../static/images/nothing_found.png" alt="Nothing Found" class="img-fluid my-4">
+      <h4>No Project Found</h4>
+      <p>Check if the origin Resource Name and Training Key is correct</p>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="row mt-3">
+    <div class="col d-flex flex-row">
+        <div class="me-5">
+            <h3>Found <code>{{ results|length }}</code> projects</h3>
+        </div>
+        <div class="form-check form-check-inline pt-1">
+            <input class="form-check-input pointer me-3" type="checkbox" id="check_all_projects">
+            <label class="form-check-label pointer" for="check_all_projects">ALL Projects</label>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row" id="project_list">
+
+        <!-- For loop logic of jinja template -->
+        {% for result in results %}
+        <div class="col-xxl-3 col-lg-4 col-md-6 mt-3 project-card">
+            <div class="card card-inverse card-primary">
+              <img src="{{result.thumbnailUri}}" class="img-fluid card-img-top">
+              <div class="project-checkbox overlay h-right pe-3 pt-2">
+                <input class="form-check-input pointer" type="checkbox" name="project_checkbox" value="{{result.id}}|{{result.name}}">
+              </div>
+              <div class="card-blockquote p-3">
+                <h5 class="card-title">{{result.name}}</h5> 
+                <p class="text-xs">{{result.description}}</p> 
+                <table width="100%">
+                  <tr style="vertical-align: top;"><td width="120">Project ID</td><td><code>{{result.id}}</code></td></tr>
+                  <tr style="vertical-align: top;"><td>Type</td><td>{{result.settings.classificationType}}</td></tr>
+                  <tr style="vertical-align: top;"><td>Created On</td><td>{{result.created}}</td></tr>
+                </table>
+              </div>
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+
+<script>
+// Toggle All Checkboxes
+$("#check_all_projects").click(function() {
+  $("input[type=checkbox]").prop("checked", $(this).prop("checked"));
+});
+
+$("input[type=checkbox]").click(function() {
+  if (!$(this).prop("checked")) {
+    $("#check_all_projects").prop("checked", false);
+  }
+});
+
+// Enable Transfer Section if at least one project is checked 
+$(document).ready(function(){
+var $checkboxes = $("input[type=checkbox]");
+    
+$checkboxes.change(function(){
+    var countCheckedCheckboxes = $checkboxes.filter(':checked').length;
+
+    if (countCheckedCheckboxes > 0) {
+      // enable Transfer section
+      $(".toggle_item").prop('disabled', false);
+      $(".toggle_item").removeClass('text-lightgray');
+    }
+    else {
+      $(".toggle_item").prop('disabled', true);
+      $(".toggle_item").addClass('text-lightgray');
+    }
+  });
+});
+</script>
+{% endif %}
+
+
+
+<!-- DEBUG 
+<div class="row mt-3">
+  <div class="col d-flex flex-row">
+      <div class="me-5">
+          <h3>Found <code>2</code> projects</h3>
+      </div>
+      <div class="form-check form-check-inline pt-1">
+          <input class="form-check-input pointer me-3" type="checkbox" id="check_all_projects">
+          <label class="form-check-label pointer" for="check_all_projects">ALL Projects</label>
+      </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row" id="project_list">
+
+      <div class="col-xxl-3 col-lg-4 col-md-6 mt-3 project-card">
+          <div class="card card-inverse card-primary">
+            <img src="../static/images/WechatIMG20.98976577.png" class="img-fluid card-img-top">
+            <div class="project-checkbox overlay h-right pe-3 pt-2">
+              <input class="form-check-input pointer" type="checkbox" name="project_checkbox" value="GUID|Project_name">
+            </div>
+            <div class="card-blockquote p-3">
+              <h5 class="card-title">Project Name</h5> 
+              <p class="text-xs">Some kind of description here</p> 
+              <table width="100%">
+                <tr style="vertical-align: top;"><td width="120">Project ID</td><td><code>GUID</code></td></tr>
+                <tr style="vertical-align: top;"><td>Type</td><td>Multiclass</td></tr>
+                <tr style="vertical-align: top;"><td>Created On</td><td>2022-01-01</td></tr>
+              </table>
+            </div>
+          </div>
+      </div>
+
+      <div class="col-xxl-3 col-lg-4 col-md-6 mt-3 project-card">
+        <div class="card card-inverse card-primary">
+          <img src="../static/images/WechatIMG20.98976577.png" class="img-fluid card-img-top">
+          <div class="project-checkbox overlay h-right pe-3 pt-2">
+            <input class="form-check-input pointer" type="checkbox" name="project_checkbox" value="GUID|Project_name">
+          </div>
+          <div class="card-blockquote p-3">
+            <h5 class="card-title">Project Name</h5> 
+            <p class="text-xs">Some kind of description here</p> 
+            <table width="100%">
+              <tr style="vertical-align: top;"><td width="120">Project ID</td><td><code>GUID</code></td></tr>
+              <tr style="vertical-align: top;"><td>Type</td><td>Multiclass</td></tr>
+              <tr style="vertical-align: top;"><td>Created On</td><td>2022-01-01</td></tr>
+            </table>
+          </div>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+ DEBUG -->
