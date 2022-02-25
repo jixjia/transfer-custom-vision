@@ -105,6 +105,8 @@ $(function () {
         $("#modal_icon").html(loading_icon);
         // reset message
         $('#modal_message').html('Preparing for transfer...<br /><code>Do NOT refresh or close this page</code>');
+        // reset error detail
+        $('#error_detail').html('');
         // reset try again button
         $('#btn_modal_tryagain').hide();
         // reset message style
@@ -125,6 +127,7 @@ $(function () {
         $('#modal_icon').html(error_icon);
         $('#modal_message').css('color','red');
         $('#modal_message').text(response.msg);
+        $('#error_detail').text(response.error_detail);
         // enable try again button
         $('#btn_modal_tryagain').show();
       }

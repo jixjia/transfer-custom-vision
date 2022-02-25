@@ -57,6 +57,7 @@ def getProjects():
 def importProjects():
     status = 'ok'
     msg = None
+    error_detail = None
     
     # input data
     data = request.json
@@ -93,6 +94,7 @@ def importProjects():
             logging.warning(str(e.args))
             msg = 'Failed to get export token. Check your ORIGIN details are correct'
             status = 'error'
+            error_detail = r.text
 
         # Transfer (ImportProject API)
         endpoint = f'https://{destination_resource_name}.cognitiveservices.azure.com/customvision/v3.3/Training/projects/import'
@@ -108,18 +110,19 @@ def importProjects():
             r = requests.post(endpoint+f'?{params}', headers=headers)
 
             if r.status_code != 200:
-                raise ValueError('ImportProjects', r.status_code)
+                raise ValueError('ImportProjects', r.status_code, r.text)
             else:
                 results = r.json()
 
         except Exception as e:
             logging.warning(str(e.args))
-            msg = 'Transfer failed. Verify your TARGET details are correct'
+            msg = f'''Transfer failed. Verify your TARGET details are correct'''
+            error_detail = r.text
             status = 'error'
 
         logging.info(f'Successful > project_id: {id}, project_name: {name}')
 
-    return jsonify({'status': status, 'msg': msg})
+    return jsonify({'status': status, 'msg': msg, 'error_detail': error_detail})
 
 
 if __name__ == '__main__':
