@@ -77,24 +77,22 @@ def importProjects():
         headers = {
             'Training-key': source_training_key,
         }
-        params = urllib.parse.urlencode({})
-
+        
         try:
-            r = requests.get(endpoint+f'?{params}', headers=headers)
-            
-            if r.status_code != 200:
-                raise ValueError('ExportProject', r.status_code)
-            else:
-                results = r.json()
+            r = requests.get(endpoint, headers=headers)
+            results = r.json()
 
+            if r.status_code != 200:
+                raise ValueError('ExportProjects', r.status_code, results)
+            else:
                 # URL encode token
                 token = results['token']
 
         except Exception as e:
             logging.warning(str(e.args))
-            msg = 'Failed to get export token. Check your ORIGIN details are correct'
-            status = 'error'
-            error_detail = r.text
+            msg = results["code"]
+            error_detail = results['message']
+            return jsonify({'status': 'error', 'msg': msg, 'error_detail': error_detail})
 
         # Transfer (ImportProject API)
         endpoint = f'https://{destination_resource_name}.cognitiveservices.azure.com/customvision/v3.3/Training/projects/import'
@@ -108,17 +106,18 @@ def importProjects():
 
         try:
             r = requests.post(endpoint+f'?{params}', headers=headers)
+            result = r.json()
 
             if r.status_code != 200:
-                raise ValueError('ImportProjects', r.status_code, r.text)
+                raise ValueError('ImportProjects', r.status_code, results)
             else:
                 results = r.json()
 
         except Exception as e:
             logging.warning(str(e.args))
-            msg = f'''Transfer failed. Verify your TARGET details are correct'''
-            error_detail = r.text
-            status = 'error'
+            msg = results["code"]
+            error_detail = results['message']
+            return jsonify({'status': 'error', 'msg': msg, 'error_detail': error_detail})
 
         logging.info(f'Successful > project_id: {id}, project_name: {name}')
 
