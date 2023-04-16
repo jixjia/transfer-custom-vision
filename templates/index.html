@@ -19,25 +19,25 @@
   <div class="row mb-2">
     <!-- SOURCE -->
     <div class="col-md-5 mt-2">
-      <h3>ORIGIN</h3>
-      <div class="py-2">
+      <h3>FROM</h3>
+      <div class="py-3">
         Resource Name 
-        <a tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="The name of your Custom Vision resource you wish to copy projects from">
+        <a tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="Name of your source Custom Vision resource to copy from">
           <i class="fa fa-info-circle pointer ps-2" aria-hidden="true"></i>
         </a>
       </div>
       <div class="input-group">
-        <input type="text" class="form-control" id="source_resource_name" name="source_resource_name" placeholder="e.g. old-custom-vision">
+        <input value="customvisionjixjiapoc" type="text" class="form-control" id="source_resource_name" name="source_resource_name" placeholder="e.g. old-custom-vision">
       </div>
-      <div class="py-2">Training Key 
-        <a tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="The training key of your Custom Vision resource. You can find it in your Custom Vision project settings page.">
+      <div class="py-3">Training Key 
+        <a tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="Training key of your source Custom Vision resource. You can find it in your Custom Vision project settings page.">
           <i class="fa fa-info-circle pointer ps-2" aria-hidden="true"></i>
         </a>
       </div>
       <div class="input-group">
-        <input type="password" class="form-control" id="source_training_key" name="source_training_key" placeholder="e.g. ca253164ff7f4dcab43f550e4d79821d">
+        <input value="4c3537c195cf44879b7b1e6ba9567736" type="password" class="form-control" id="source_training_key" name="source_training_key" placeholder="e.g. ca253164ff7f4dcab43f550e4d79821d">
       </div>
-      <div class="h-right mt-3">
+      <div class="h-right mt-4">
         <button class="btn btn-block btn-secondary pointer-disabled" id="btn_get_projects" disabled><i class="fa fa-eye px-2" aria-hidden="true"></i> Get Projects</button>
       </div>
     </div>
@@ -49,24 +49,24 @@
 
     <!-- DESTINATION -->
     <div class="col-md-5 mt-2">
-      <h3 class="text-lightgray toggle_item">TARGET</h3>
-      <div class="py-2 text-lightgray toggle_item">Resource Name 
-        <a tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="The name of your target Custom Vision resource you wish to copy projects to">
+      <h3 class="text-lightgray toggle_item">TO</h3>
+      <div class="py-3 text-lightgray toggle_item">Resource Name 
+        <a tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="Name of your target Custom Vision resource to copy projects to">
           <i class="fa fa-info-circle pointer ps-2" aria-hidden="true"></i>
         </a>
       </div>
       <div class="input-group">
-        <input type="text" class="form-control toggle_item text-lightgray" id="destination_resource_name" name="destination_resource_name" placeholder="e.g. new-custom-vision" disabled>
+        <input value="customvisionjixjiapoc" type="text" class="form-control toggle_item text-lightgray" id="destination_resource_name" name="destination_resource_name" placeholder="e.g. new-custom-vision" disabled>
       </div>
-      <div class="py-2 text-lightgray toggle_item">Training Key 
-        <a tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="The training key of your target Custom Vision resource. You can find it in your Custom Vision project settings page.">
+      <div class="py-3 text-lightgray toggle_item">Training Key 
+        <a tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="Training key of your target Custom Vision resource. You can find it in your Custom Vision project settings page.">
           <i class="fa fa-info-circle pointer ps-2" aria-hidden="true"></i>
         </a>
       </div>
       <div class="input-group">
-        <input type="password" class="form-control toggle_item text-lightgray" id="destination_training_key" name="destination_training_key" placeholder="e.g. 4a1237c219cf44879b7b1e6et1567423" disabled>
+        <input value="4c3537c195cf44879b7b1e6ba9567736" type="password" class="form-control toggle_item text-lightgray" id="destination_training_key" name="destination_training_key" placeholder="e.g. 4a1237c219cf44879b7b1e6et1567423" disabled>
       </div>
-      <div class="h-right mt-3">
+      <div class="h-right mt-4">
         <button class="btn btn-block btn-secondary pointer-disabled toggle_item" id="btn_import_projects" disabled><i class="fa fa-magic px-2" aria-hidden="true"></i> Transfer Projects</button>
       </div>
     </div>
@@ -74,12 +74,12 @@
   </div>
 
   <!-- Note -->
-  <div>
+  <!-- <div>
     <h4>Note</h4>
     <ul>
       <li>If the selected project already exists in target, a new project with a numbered suffix will be created</li>
     </ul>
-  </div>
+  </div> -->
 
   <!-- Project List -->
   <div id="project_list" class="row mt-4 mb-2"></div>
@@ -94,14 +94,15 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Transferring</h5>
+        <h5 class="modal-title">Transferring...</h5>
       </div>
       <div class="modal-body">
         <!-- AJAX Start -->
         <div class="mt-5">
           <div class="text-center">
             <div id="modal_icon" class="col center_flex my-5"></div>
-            <p id="modal_message" class="mt-2 mb-5"></p>
+            <p id="modal_message" class="mt-2 mb-4"></p>
+            <p id="error_detail" class="mb-3"></p>
           </div>
         </div>
         <!-- AJAX End -->
@@ -172,7 +173,7 @@
         <p>
           This site do NOT store Your information entered and we also recommend you to turn off Browser's <strong>Remember Password</strong> feature for this site to protect your sensitive information.<br>
         </p>
-        
+      </div>
     </div>
   </div>
 </div>
